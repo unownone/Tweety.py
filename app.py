@@ -32,7 +32,7 @@ user = mongo.tweetypy.tokens
 
 templates = Jinja2Templates(directory='templates')
 
-app = FastAPI()
+app = FastAPI(docs_url=None,openapi_url=None)
 
 
 def generate_key():
