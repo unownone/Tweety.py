@@ -64,10 +64,10 @@ async def authorizationToken(data:AuthTokens,background_tasks: BackgroundTasks):
         'quota':100,
         'reset':datetime.now()+timedelta(days=1)}
         user.insert_one(datas)
-        send_email_background(background_tasks,'TweetyPy Authentication Token',data.email,{'apikey':auth_token})
+        send_email_background(background_tasks=background_tasks,subject='TweetyPy Authentication Token',email_to=data.email,body={'apikey':auth_token})
         return JSONResponse(content=jsonable_encoder({"response":"Email Successfully Sent!"}))
     else:
-        send_email_background(background_tasks,'TweetyPy Authentication Token',data.email,{'apikey':auth_token})
+        send_email_background(background_tasks=background_tasks,subject='TweetyPy Authentication Token',email_to=data.email,body={'apikey':auth_token})
         return JSONResponse(content=jsonable_encoder({"response":"Email Successfully Sent!"}))
 
 
