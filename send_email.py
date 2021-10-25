@@ -1,4 +1,4 @@
-import os
+from jinja2 import Template
 from fastapi import BackgroundTasks
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from decouple import config
@@ -21,7 +21,8 @@ async def send_email_async(subject: str, email_to: str, body: dict,type:int=0):
     message = MessageSchema(
         subject=subject,
         recipients=[email_to],
-        body=body,
+        body='',
+        template_body=body,
         subtype='html',
     )
     
@@ -38,7 +39,8 @@ def send_email_background(background_tasks: BackgroundTasks, subject: str, email
     message = MessageSchema(
         subject=subject,
         recipients=[email_to],
-        body=body,
+        body='',
+        template_body=body,
         subtype='html',
     )
     fm = FastMail(conf)

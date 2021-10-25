@@ -28,12 +28,13 @@ class AuthTokens(BaseModel):
     access_sec: str
 
 mongo = MongoClient(config("mongo_host"))
-user = mongo.tweetypy.tokens
+user = mongo.tweetypy
+user = user.tokenize
 
 
 templates = Jinja2Templates(directory='templates')
 
-app = FastAPI(docs_url=None,openapi_url=None)
+app = FastAPI(docs_url=None,openapi_url=None,)
 
 
 def generate_key():
@@ -54,7 +55,8 @@ async def root(request:Request):
 @app.post('/authtoken',response_class=JSONResponse)
 async def authorizationToken(data:AuthTokens,background_tasks: BackgroundTasks):
     auth_token = generate_key()
-    if user.find_one({"email":data.email}) is None:
+    db = user.find_one({"email":data.email})
+    if db is None:
         datas ={'auth_token':auth_token,'email':data.email,
         'keyval':{
             'cons_key':data.cons_key,
@@ -63,11 +65,12 @@ async def authorizationToken(data:AuthTokens,background_tasks: BackgroundTasks):
             'access_sec':data.access_sec},
         'quota':100,
         'reset':datetime.now()+timedelta(days=1)}
-        user.insert_one(datas)
+        print(user.insert_one(datas))
         send_email_background(background_tasks=background_tasks,subject='TweetyPy Authentication Token',email_to=data.email,body={'apikey':auth_token})
         return JSONResponse(content=jsonable_encoder({"response":"Email Successfully Sent!"}))
     else:
-        send_email_background(background_tasks=background_tasks,subject='TweetyPy Authentication Token',email_to=data.email,body={'apikey':auth_token})
+        print('going here instead')
+        send_email_background(background_tasks=background_tasks,subject='TweetyPy Authentication Token',email_to=db['email'],body={'apikey':db['auth_token']})
         return JSONResponse(content=jsonable_encoder({"response":"Email Successfully Sent!"}))
 
 
