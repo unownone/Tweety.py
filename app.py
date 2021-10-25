@@ -4,6 +4,7 @@ from pymongo import MongoClient
 from fastapi.responses import HTMLResponse,JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.encoders import jsonable_encoder
 import binascii,os
 from send_email import send_email_background, send_email_async
 from decouple import config
@@ -64,16 +65,16 @@ async def authorizationToken(data:AuthTokens,background_tasks: BackgroundTasks):
         'reset':datetime.now()+timedelta(days=1)}
         user.insert_one(datas)
         send_email_background(background_tasks,'TweetyPy Authentication Token',data.email,{'apikey':auth_token})
-        return JSONResponse(content={"response":"Email Successfully Sent!"})
+        return JSONResponse(content=jsonable_encoder({"response":"Email Successfully Sent!"}))
     else:
         send_email_background(background_tasks,'TweetyPy Authentication Token',data.email,{'apikey':auth_token})
-        return JSONResponse(content={"response":"Email Successfully Sent!"})
+        return JSONResponse(content=jsonable_encoder({"response":"Email Successfully Sent!"}))
 
 
 @app.post('/commentbot',response_class=JSONResponse)
 async def botify(data:Token,background_tasks: BackgroundTasks):
     if data.token == '' or len(data.scripts) == 0 or len(data.tags) == 0 or data.nums == 0 or data.nums is None:
-        return JSONResponse(content={"response":"Invalid/empty Data"})
+        return JSONResponse(content=jsonable_encoder({"response":"Invalid/empty Data"}))
     finalTags = (" OR ").join(data.tags)
     background_tasks.add_task(tweetify,data.token,scripts=data.scripts,tags=finalTags,tweetnums=data.nums)
-    return JSONResponse(content={"response":"Successfully Sent!"})
+    return JSONResponse(content=jsonable_encoder({"response":"Successfully Sent!"}))
