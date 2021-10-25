@@ -20,7 +20,6 @@ class Token(BaseModel):
 
 
 class AuthTokens(BaseModel):
-    token: str
     email: str
     cons_key: str
     cons_sec: str
