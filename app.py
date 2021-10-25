@@ -46,8 +46,8 @@ def generate_key():
 
 
 @app.get('/',response_class=HTMLResponse)
-async def root():
-    return templates.TemplateResponse("index.html")
+async def root(request:Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 
