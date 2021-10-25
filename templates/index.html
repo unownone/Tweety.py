@@ -1,0 +1,34 @@
+<head>
+    <title>Tweety.Py</title>
+</head>
+<body>
+    <h1>Welcome to Tweety.PY, your twitter bot!</h1>
+    <h3>Features:</h3>
+    <hr>
+    <ul>
+        <li>Make comments with custom multiple scripts on targetted tweets for better engagement!</li>
+        <li>Follow users and comment on their profile follow for follow back to gain followers![upcoming]</li>
+        <li>Gain likes on a post by sharing it on twitter![upcoming]</li>
+        <li>Integrated hashtag library to boost performance of post![upcoming]</li>
+    </ul>
+    <hr>
+    <h3>How to Use?</h3>
+    <p wordwrap="break">First do a post request at /authtoken along with 
+    data : email: your email id | cons_key: your twitter user connection key |cons_sec: your twitter user connection secret |
+    access_key:your twitter access key | access_secret: your twitter access key secret||
+    <br>
+    On success we will send you your email with your api key. This key will be used to authenticate with our servers and use the bot.<br>
+    Further , you will be given a quota of 100 total executions and a cooldown period of 1 day.
+    <br>
+    <hr>
+    To use the bot : 
+    <hr><br>
+    make a post request at /commentbot with the following data : 
+    <ul><li>token: your access token</li><li>scripts: a list of scripts , will contain strings of sentences. The bot will randomly comment them.</li>
+    <li>tags:list of tags can be hashtags, can be $tags, can be words.</li>
+    <li>nums:int value of number of tweets to comment on.</li></ul>
+    Thank you for using tweety.Py!
+    Built with Tweepy and FastApi on Python.
+    </p>
+
+</body>
