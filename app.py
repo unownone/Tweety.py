@@ -64,16 +64,16 @@ async def authorizationToken(data:AuthTokens,background_tasks: BackgroundTasks):
         'reset':datetime.now()+timedelta(days=1)}
         user.insert_one(datas)
         send_email_background(background_tasks,'TweetyPy Authentication Token',data.email,{'apikey':auth_token})
-        return JSONResponse({"response":"Email Successfully Sent!"})
+        return JSONResponse(content={"response":"Email Successfully Sent!"})
     else:
         send_email_background(background_tasks,'TweetyPy Authentication Token',data.email,{'apikey':auth_token})
-        return JSONResponse({"response":"Email Successfully Sent!"})
+        return JSONResponse(content={"response":"Email Successfully Sent!"})
 
 
 @app.post('/commentbot',response_class=JSONResponse)
 async def botify(data:Token,background_tasks: BackgroundTasks):
     if data.token == '' or len(data.scripts) == 0 or len(data.tags) == 0 or data.nums == 0 or data.nums is None:
-        return JSONResponse({"response":"Invalid/empty Data"})
+        return JSONResponse(content={"response":"Invalid/empty Data"})
     finalTags = (" OR ").join(data.tags)
     background_tasks.add_task(tweetify,data.token,scripts=data.scripts,tags=finalTags,tweetnums=data.nums)
-    return JSONResponse({"response":"Successfully Sent!"})
+    return JSONResponse(content={"response":"Successfully Sent!"})
