@@ -27,7 +27,7 @@ class AuthTokens(BaseModel):
     access_key: str
     access_sec: str
 
-mongo = MongoClient(config["MONGO_HOST"])
+mongo = MongoClient(config("mongo_host"))
 user = mongo.tweetypy.tokens
 
 

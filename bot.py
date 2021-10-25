@@ -8,7 +8,7 @@ from fastapi import BackgroundTasks
 from send_email import send_email_background, send_email_async
 ###BOMBIFY BOT FOR GAINING TRACTION
 
-mongo = MongoClient(config["MONGO_HOST"])
+mongo = MongoClient(config("mongo_host"))
 user = mongo.tweetypy.tokens
 
 async def tweetify(authToken,scripts=[],tags='',tweetnums=''):
