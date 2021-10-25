@@ -38,7 +38,7 @@ app = FastAPI(docs_url=None,openapi_url=None)
 def generate_key():
 
     token = binascii.hexlify(os.urandom(20)).decode()
-    if user.find_one(token=token) is not None:
+    while user.find_one({'auth_token':token}) is not None:
         token = binascii.hexlify(os.urandom(20)).decode()
     return token 
 
@@ -62,7 +62,7 @@ async def authorizationToken(data:AuthTokens,background_tasks: BackgroundTasks):
             'access_sec':data.access_sec},
         'quota':100,
         'reset':datetime.now()+timedelta(days=1)}
-        user.insert_one()
+        user.insert_one(datas)
         send_email_background(background_tasks,'TweetyPy Authentication Token',data.email,{'apikey':auth_token})
         return JSONResponse({"response":"Email Successfully Sent!"})
     else:
