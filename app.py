@@ -53,7 +53,7 @@ async def root(request:Request):
 @app.post('/authtoken',response_class=JSONResponse)
 async def authorizationToken(data:AuthTokens,background_tasks: BackgroundTasks):
     auth_token = generate_key()
-    if user.find_one(email=data.email) is None:
+    if user.find_one({"email":data.email}) is None:
         datas ={'auth_token':auth_token,'email':data.email,
         'keyval':{
             'cons_key':data.cons_key,
