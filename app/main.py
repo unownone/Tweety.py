@@ -12,8 +12,8 @@ app.include_router(auth_router)
 app.include_router(bot_router)
 
 
-@app.get('/',response_class=HTMLResponse)
-async def root(request:Request):
-    """Main Page
-    """
-    return templates.TemplateResponse("index.html", {"request": request})
+# @app.get('/',response_class=HTMLResponse)
+# async def root(request:Request):
+#     """Main Page
+#     """
+#     return templates.TemplateResponse("index.html", {"request": request})
