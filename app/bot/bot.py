@@ -86,7 +86,7 @@ async def tweetify(user_obj,scripts=[],tags='',tweetnums=''):
                 'body':f'Good news! Your task has been successfully completed.{data} Your Current quota balance is : {limit}.'
             }
             # send_email_background(BackgroundTasks,'TweetyPy Alert!',user_obj.email,datas,type=1)
-            user_obj.save()
+        user_obj.save()
         return 1
     except Exception as e:
         raise e
