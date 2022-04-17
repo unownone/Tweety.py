@@ -23,7 +23,7 @@ Using Tweety.py's Fast API Now you can do that and much more !
 # API ENDPOINTS:
 
 Want Better Documentation ?  
- <font size=5 color=green>Use FastAPI's Swagger UI :[docs](https://tweetypy1.herokuapp.com/docs)</font>
+ [<font size=5 color=green> Use FastAPI's Swagger UI </font>](https://tweetypy1.herokuapp.com/docs)
 ## <font color=orange>/auth</font> : Signup/Login to the tweety.py
     /signup : [POST]
         body: {
