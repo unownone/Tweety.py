@@ -15,7 +15,7 @@ from .bot import (
 from .models import StartComment
 
 
-router = APIRouter(
+router:APIRouter = APIRouter(
     prefix='/bot',
     tags=['bot'],
     )
