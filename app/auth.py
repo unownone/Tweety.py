@@ -22,9 +22,9 @@ router = APIRouter(
 
 @router.post('/login')
 def login(user: User_dict, Authorize: AuthJWT = Depends()):
-    hash = Hasher()
+    hash:Hasher = Hasher()
     try:
-        user_obj = User.objects.get(email=user.email)
+        user_obj:User = User.objects.get(email=user.email)
     except User.DoesNotExist:
         raise HTTPException(status_code=400, detail="Incorrect email or password")
     
@@ -53,13 +53,13 @@ def login(user: User_dict, Authorize: AuthJWT = Depends()):
 
 @router.post('/signup')
 def signup(user: User_signup_dict):
-    hash = Hasher()
+    hash:Hasher = Hasher()
     try:
-        user_obj = User.objects.get(email=user.email)
+        user_obj:User = User.objects.get(email=user.email)
         return ErrorResponseModel(error='Email Already Exists!')
     except User.DoesNotExist:
         print('Proper Let us Create an user')
-    user_obj = User.objects.create(
+    user_obj:User = User.objects.create(
         email=user.email,
         password=hash.get_password_hash(user.password),
         name=user.name,

@@ -9,7 +9,7 @@ from app.db import User
 
 
 
-async def tweepyOauth(user_obj):
+async def tweepyOauth(user_obj: User):
     if user_obj.request_token and (user_obj.access_token and user_obj.access_secret):
         raise ValueError('Already Authenticated')
     auth = tweepy.OAuthHandler(config("CONSUMER_KEY"),config("CONSUMER_SECRET"))
@@ -18,7 +18,7 @@ async def tweepyOauth(user_obj):
     user_obj.save()
     return url
 
-async def tweepyOauthVerify(user_obj,verifier):
+async def tweepyOauthVerify(user_obj: User,verifier):
     if user_obj.request_token is None:
         raise ValueError('No Request Token Provided')
     auth = tweepy.OAuthHandler(config("CONSUMER_KEY"),config("CONSUMER_SECRET"))
@@ -27,7 +27,7 @@ async def tweepyOauthVerify(user_obj,verifier):
     user_obj.save()
     return True
 
-async def tweetify(user_obj,scripts=[],tags='',tweetnums=''):
+async def tweetify(user_obj: User,scripts: list=[],tags: str='',tweetnums: str=''):
     try:
         auth = tweepy.OAuthHandler(config("CONSUMER_KEY"),config("CONSUMER_SECRET"))
         auth.set_access_token(user_obj.access_token,user_obj.access_secret)
@@ -68,14 +68,14 @@ async def tweetify(user_obj,scripts=[],tags='',tweetnums=''):
                 api.update_status(status = choice(scripts),in_reply_to_status_id = tweet.id,auto_populate_reply_metadata = True)
             except:
                 pass
-        flag = False
+        flag:bool = False
         if time > datetime.now():
-            limit = 100
-            flag = True
+            limit:int = 100
+            flag:bool = True
             user_obj.quota = limit
             user_obj.reset = datetime.now() + timedelta(days=1)
         else:
-            limit = limit - tweetnums
+            limit:int = limit - tweetnums
             user_obj.quota = limit
             if flag:
                 data = 'Your quota has been refilled!'
