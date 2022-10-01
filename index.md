@@ -92,7 +92,10 @@ have a .env file in root that will contain these values:
 - ```MONGO_HOST``` : Mongo host name 
 - ```MONGO_PORT``` : Mongo port number
 - ```MONGO_USER``` : Mongo user name
-- ```MONGO_PASSWORD``` : Mongo password
+- ```MONGO_PASS``` : Mongo password
+- ```EMAIL_HOST``` : Email host
+- ```EMAIL_HOST_USER``` : Email of user
+- ```EMAIL_HOST_PASSWORD``` : Email password
 
 
 # Built using [FastAPI](https://fastapi.tiangolo.com) , [MongoDB](https://mongodb.org) , [Heroku](https://www.heroku.com)
