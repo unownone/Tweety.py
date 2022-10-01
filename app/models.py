@@ -14,14 +14,14 @@ class User_dict(BaseModel):
     password: str
 
 
-def dictResponseModel(data={},message='Okay'):
+def dictResponseModel(data: dict={},message: str='Okay'):
     return  JSONResponse(content={
             "data": data,
             "message": message,
         },status_code=200
     )
 
-def ListResponseModel(data=dict(), message='Okay'):
+def ListResponseModel(data=dict(), message: str='Okay'):
     return  JSONResponse(content={
             "data": [data],
             "message": message,
@@ -29,7 +29,7 @@ def ListResponseModel(data=dict(), message='Okay'):
     )
 
 
-def ErrorResponseModel(error, code=400, message=BaseError):
+def ErrorResponseModel(error, code: int=400, message: str=BaseError):
     return JSONResponse(
         content={
             "error": error,

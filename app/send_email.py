@@ -3,7 +3,7 @@ from fastapi import BackgroundTasks
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from decouple import config
 
-conf = ConnectionConfig(
+conf:ConnectionConfig = ConnectionConfig(
     MAIL_USERNAME=config("EMAIL_HOST_USER"),
     MAIL_PASSWORD=config("EMAIL_HOST_PASSWORD"),
     MAIL_FROM=config("EMAIL_HOST_USER"),
@@ -26,7 +26,7 @@ async def send_email_async(subject: str, email_to: str, body: dict,type:int=0):
         subtype='html',
     )
     
-    fm = FastMail(conf)
+    fm:FastMail = FastMail(conf)
     if type == 0:
         await fm.send_message(message, template_name='email.html')
     elif type == 1:
@@ -43,7 +43,7 @@ def send_email_background(background_tasks: BackgroundTasks, subject: str, email
         template_body=body,
         subtype='html',
     )
-    fm = FastMail(conf)
+    fm:FastMail = FastMail(conf)
     if type==0:
         background_tasks.add_task(fm.send_message, message, template_name='email.html')
     elif type==1:
