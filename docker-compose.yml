@@ -1,0 +1,35 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - 127.0.0.1:8080:8080
+    volumes:
+      - ./:/app
+      - /app/.venv/ # This stops local .venv getting mounted
+    depends_on:
+      - database
+
+  database:
+    image: mongo:4.4.4
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: username
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: database
+    volumes:
+      - /data/db
+    ports:
+      - 127.0.0.1:27017:27017
+
+  database-gui:
+    image: mongoclient/mongoclient:4.0.1
+    depends_on:
+      - database
+    environment:
+      - MONGOCLIENT_DEFAULT_CONNECTION_URL=mongodb://username:password@database:27017
+    volumes:
+      - /data/db mongoclient/mongoclient
+    ports:
+      - 127.0.0.1:4000:3000
